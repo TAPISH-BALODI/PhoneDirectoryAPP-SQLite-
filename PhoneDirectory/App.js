@@ -52,7 +52,19 @@ const App = () => {
     })
   }
 
+  const display=<View style={styles.displayContacts}>
 
+         {contactlist.map((item, key)=>(
+           <View style={styles.listOfContacts}>
+        <Text key={key.id} style={styles.name} > { item.name } </Text>
+        <Text key={key.id} style={styles.number} > { item.num} </Text>
+        </View>
+        ))
+        }
+
+    </View>
+  
+        
   const addContact=()=>{
     if(!contactName && !contactNum){
       alert("Enter Name and Number");
@@ -75,7 +87,6 @@ const App = () => {
     console.log("adding wait");
 
   }
-
   const getContacts=()=>{
     db.transaction(txn=>{
       txn.executeSql(
@@ -113,24 +124,10 @@ const App = () => {
     })
   }
 
-  
-  const renderContacts=({item})=>{
-
-     
-    return(
-    <View style={styles.displayContacts}>
-        <View style={styles.listOfContacts}>
-          <Text style={styles.name}>{item.id}</Text>
-          <Text style={styles.number}>{item.name}</Text>
-          <Text style={styles.number}>{item.num}</Text>
-      </View>
-    </View>
-    )
-  }
   useEffect(async()=>{
    await createTables();
    await getContacts();
-
+    
   },[]);
 
 
@@ -160,16 +157,10 @@ const App = () => {
   
       
         {/*displaying  contacts  */}
-         <Flatlist 
-         data={contactlist} 
-         renderItem={renderContacts()} 
-         keyExtractor={({item,idx}) => {String(item.id)}}
-         />
-
-         
-            
-    
-
+        <>
+          {display}
+        </>
+      
        {/* adding contacts */}
 
       <View style={styles.BottomNavbar}>
