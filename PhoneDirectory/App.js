@@ -52,16 +52,20 @@ const App = () => {
     })
   }
 
-  const display=<View style={styles.displayContacts}>
+
+  const display=
+    <View style={styles.displayContacts}>
+  <ScrollView>
 
          {contactlist.map((item, key)=>(
            <View style={styles.listOfContacts}>
-        <Text key={key.id} style={styles.name} > { item.name } </Text>
-        <Text key={key.id} style={styles.number} > { item.num} </Text>
+        <Text key={item.id} style={styles.name} > { item.name } </Text>
+        <Text key={item.id} style={styles.number} > { item.num} </Text>
         </View>
         ))
         }
 
+    </ScrollView>
     </View>
   
         
@@ -124,9 +128,11 @@ const App = () => {
     })
   }
 
-  useEffect(async()=>{
-   await createTables();
-   await getContacts();
+  useEffect(()=>{
+   
+    getContacts();
+  
+    
     
   },[]);
 
@@ -140,6 +146,8 @@ const App = () => {
    </View>
 
       {/* searching for a contact */}
+
+
       <View style={styles.SearchBar}>
           <TextInput  value={searchName} onChangeText={text=>setSearch(text)} placeholder='Enter Contact Name' style={styles.TextInput}></TextInput>
 
@@ -157,9 +165,11 @@ const App = () => {
   
       
         {/*displaying  contacts  */}
-        <>
+        
+      
           {display}
-        </>
+        
+        
       
        {/* adding contacts */}
 
